@@ -6,13 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.DraggableState
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -48,14 +42,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import javax.sql.StatementEvent
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TestStyleTexts()
+            TestUpdateUIColor()
+//            TestStyleTexts()
 //            TestImageCard()
 //            CounterView()
 //            MainContent()
@@ -63,6 +58,60 @@ class MainActivity : ComponentActivity() {
 //            UsedInComposeXml()
         }
     }
+}
+
+@Composable
+fun TestUpdateUIColor() {
+    Column(modifier = Modifier.fillMaxSize()) {
+        val color = remember {
+            mutableStateOf(Color.Green)
+        }
+
+        UpdateUIColor(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+
+        ){colorGenerated->
+            color.value = colorGenerated
+        }
+        Box(
+            modifier = Modifier
+                .background(color.value)
+                .weight(1f)
+                .fillMaxSize()
+
+        )
+    }
+}
+
+@Composable
+fun UpdateUIColor(
+    modifier: Modifier = Modifier,
+    updateColor: (Color) -> Unit
+) {
+    val color = remember {
+        mutableStateOf(Color.Yellow)
+    }
+    Box(modifier = modifier
+        .background(color.value)
+        .clickable {
+
+            color.value = Color(
+                red = Random.nextFloat(),
+                green = Random.nextFloat(),
+                blue = Random.nextFloat(),
+                alpha = 1f
+            )
+
+            Color(
+                red = Random.nextFloat(),
+                green = Random.nextFloat(),
+                blue = Random.nextFloat(),
+                alpha = 1f
+            ).also { updateColor(it) }
+
+        })
 }
 
 @Composable
@@ -103,22 +152,23 @@ fun TestStyleTexts() {
 
 @Composable
 fun TestColumn() {
-    Column(modifier =
-    Modifier
-        .fillMaxSize()
-        .background(Color.Blue)
-        .padding(12.dp)
-        .background(Color.Gray)
-        .padding(12.dp)
-        .background(Color.Green)
-        .padding(12.dp)
-        .background(Color.Magenta)
-        .padding(12.dp)
-        .border(
-            border = BorderStroke(1.dp, Color.Red),
-            shape = RoundedCornerShape(50),
-        )
-        .padding(12.dp)
+    Column(
+        modifier =
+        Modifier
+            .fillMaxSize()
+            .background(Color.Blue)
+            .padding(12.dp)
+            .background(Color.Gray)
+            .padding(12.dp)
+            .background(Color.Green)
+            .padding(12.dp)
+            .background(Color.Magenta)
+            .padding(12.dp)
+            .border(
+                border = BorderStroke(1.dp, Color.Red),
+                shape = RoundedCornerShape(50),
+            )
+            .padding(12.dp)
     ) {
         Text(text = "SomeText")
 
@@ -234,8 +284,9 @@ fun UserCard() {
     }
 
 }
+
 @Composable
-fun TestImageCard(){
+fun TestImageCard() {
     val painter = painterResource(id = R.drawable.kermit_the_frog)
     val description = "Kermit id paying in the snow"
     val title = "Kermit id paying in the snow"
@@ -302,8 +353,6 @@ fun ImageCard(
     }
 
 }
-
-
 
 
 @Preview(showBackground = true)
