@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ComposeApp</string>
+    <string name="dummy_text">This a dummy text for test purpose</string>
+</resources>
