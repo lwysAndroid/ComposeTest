@@ -6,12 +6,18 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.DraggableState
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -39,24 +45,49 @@ class MainActivity : ComponentActivity() {
         setContent {
 //            CounterView()
 //            MainContent()
-            UsedInComposeXml()
+            TestColumn()
+//            UsedInComposeXml()
         }
     }
 }
 
 @Composable
-fun UsedInComposeXml(){
+fun TestColumn() {
+    Column(modifier =
+    Modifier
+        .fillMaxSize()
+        .background(Color.Blue)
+        .padding(12.dp)
+        .background(Color.Gray)
+        .padding(12.dp)
+        .background(Color.Green)
+        .padding(12.dp)
+        .background(Color.Magenta)
+        .padding(12.dp)
+        .border(
+            border = BorderStroke(1.dp, Color.Red),
+            shape = RoundedCornerShape(50),
+        )
+        .padding(12.dp)
+    ) {
+        Text(text = "SomeText")
+
+    }
+}
+
+@Composable
+fun UsedInComposeXml() {
     AndroidView(
-        factory = {context->
-                  View.inflate(context,R.layout.used_in_compose,null)
+        factory = { context ->
+            View.inflate(context, R.layout.used_in_compose, null)
         },
         modifier = Modifier.fillMaxSize(),
-        update = {view->
+        update = { view ->
             val usedInComposeButton = view.findViewById<Button>(R.id.usedInComposeButton)
             val usedInComposeText = view.findViewById<TextView>(R.id.usedInComposeText)
 
             usedInComposeButton.setOnClickListener {
-                val random  = Math.random()
+                val random = Math.random()
                 usedInComposeText.text = "The value has changed for this ${random}"
             }
 
@@ -70,13 +101,15 @@ fun CounterView() {
     val counterValue = remember { mutableStateOf(1) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Text(modifier = Modifier
-            .padding(12.dp)
-            .align(Alignment.TopCenter),
+        Text(
+            modifier = Modifier
+                .padding(12.dp)
+                .align(Alignment.TopCenter),
             fontSize = 32.sp,
             color = Color.Blue,
             fontFamily = FontFamily.Monospace,
-            text = "Counter: ${counterValue.value}")
+            text = "Counter: ${counterValue.value}"
+        )
         Button(
             modifier = Modifier
                 .padding(24.dp)
@@ -112,9 +145,9 @@ fun MainContent() {
 }
 
 @Composable
-fun UserList(userList:List<User>) {
-    LazyColumn{
-        items(userList) { user->
+fun UserList(userList: List<User>) {
+    LazyColumn {
+        items(userList) { user ->
             UserCard()
         }
     }
@@ -143,7 +176,8 @@ fun UserCard() {
             Text(text = stringResource(id = R.string.dummy_text))
             Button(onClick = { /*
             perform button click action here
-            */ }) {
+            */
+            }) {
                 Text(text = "View Profile")
             }
         }
@@ -154,7 +188,7 @@ fun UserCard() {
 
 @Preview(showBackground = true)
 @Composable
-fun ShowPreview(){
+fun ShowPreview() {
     Surface(modifier = Modifier.fillMaxSize()) {
         MainContent()
     }
