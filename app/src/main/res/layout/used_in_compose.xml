@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/usedInComposeText"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/purple_200"
+        android:gravity="center"
+        android:text="Some Example" />
+
+    <Button
+        android:id="@+id/usedInComposeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Text"
+        android:textAllCaps="false"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

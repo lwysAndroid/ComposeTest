@@ -1,6 +1,9 @@
 package com.example.composeapp
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -27,6 +30,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 
 class MainActivity : ComponentActivity() {
 
@@ -34,9 +38,31 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 //            CounterView()
-            MainContent()
+//            MainContent()
+            UsedInComposeXml()
         }
     }
+}
+
+@Composable
+fun UsedInComposeXml(){
+    AndroidView(
+        factory = {context->
+                  View.inflate(context,R.layout.used_in_compose,null)
+        },
+        modifier = Modifier.fillMaxSize(),
+        update = {view->
+            val usedInComposeButton = view.findViewById<Button>(R.id.usedInComposeButton)
+            val usedInComposeText = view.findViewById<TextView>(R.id.usedInComposeText)
+
+            usedInComposeButton.setOnClickListener {
+                val random  = Math.random()
+                usedInComposeText.text = "The value has changed for this ${random}"
+            }
+
+
+        }
+    )
 }
 
 @Composable
